@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.loc.newsapp.R
 import com.loc.newsapp.domain.model.Article
@@ -91,7 +93,7 @@ fun DetailsScreen(
             )
         ) {
             item {
-                AsyncImage(
+                SubcomposeAsyncImage(
                     model = ImageRequest.Builder(context = context).data(article.urlToImage)
                         .build(),
                     contentDescription = null,
@@ -120,7 +122,6 @@ fun DetailsScreen(
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun DetailsScreenPreview() {

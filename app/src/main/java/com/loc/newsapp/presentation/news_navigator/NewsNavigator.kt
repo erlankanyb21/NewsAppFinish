@@ -70,7 +70,6 @@ fun NewsNavigator() {
                 backStackState?.destination?.route == Route.BookmarkScreen.route
     }
 
-
     Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
         if (isBottomBarVisible) {
             NewsBottomNavigation(

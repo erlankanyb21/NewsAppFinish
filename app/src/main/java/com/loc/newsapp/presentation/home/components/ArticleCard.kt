@@ -1,6 +1,7 @@
 package com.loc.newsapp.presentation.home.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,14 +26,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.AsyncImage
+import androidx.compose.ui.unit.dp
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.loc.newsapp.R
 import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.domain.model.Source
+import com.loc.newsapp.presentation.Dimens
 import com.loc.newsapp.presentation.Dimens.ArticleCardSize
 import com.loc.newsapp.presentation.Dimens.ExtraSmallPadding
 import com.loc.newsapp.presentation.Dimens.ExtraSmallPadding2
+import com.loc.newsapp.presentation.Dimens.MediumPadding1
 import com.loc.newsapp.presentation.Dimens.SmallIconSize
 import com.loc.newsapp.ui.theme.NewsAppTheme
 
@@ -47,18 +52,19 @@ fun ArticleCard(
         modifier = modifier.clickable { onClick?.invoke() },
 
         ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             modifier = Modifier
                 .size(ArticleCardSize)
                 .clip(MaterialTheme.shapes.medium),
             model = ImageRequest.Builder(context).data(article.urlToImage).build(),
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            loading = { CircularProgressIndicator() }
         )
         Column(
             verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
-                .padding(horizontal = ExtraSmallPadding)
+                .padding(horizontal = MediumPadding1)
                 .height(ArticleCardSize)
         ) {
             Text(
@@ -85,9 +91,11 @@ fun ArticleCard(
                 )
                 Spacer(modifier = Modifier.width(ExtraSmallPadding))
                 Text(
-                    text = article.publishedAt,
+                    text = article.publishedAt.dropLast(1).drop(11),
                     style = MaterialTheme.typography.labelSmall,
-                    color = colorResource(id = R.color.body)
+                    color = colorResource(id = R.color.body),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }
